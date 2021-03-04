@@ -2,7 +2,7 @@ import React from 'react';
 import './ListaTareas.css'
 import Tarea from '../Tarea/Tarea'
 
-const ListaTareas = ({tareas,setTareas}) => {
+const ListaTareas = ({tareas,setTareas,mostrarCompletadas}) => {
       
       const toogleCompletada = (id) =>{
             setTareas(
@@ -32,12 +32,26 @@ const ListaTareas = ({tareas,setTareas}) => {
         <ul className='lista-tareas'>
               {
                     tareas.length>0?
-                    tareas.map((tarea)=><Tarea key={tarea.id} 
-                                         tarea={tarea} 
-                                         toogleCompletada={toogleCompletada}
-                                         actualizarTarea={actualizarTarea}
-                                         eliminarTarea={eliminarTarea}
-                                         />)
+                    tareas.map((tarea)=>{
+                                  if(mostrarCompletadas)
+                                  {                    
+                                        return <Tarea key={tarea.id} 
+                                               tarea={tarea} 
+                                               toogleCompletada={toogleCompletada}
+                                               actualizarTarea={actualizarTarea}
+                                               eliminarTarea={eliminarTarea}
+                                               />
+                                  }
+                                    else if(!tarea.completada){
+                                          return <Tarea key={tarea.id} 
+                                                 tarea={tarea} 
+                                                 toogleCompletada={toogleCompletada}
+                                                 actualizarTarea={actualizarTarea}
+                                                 eliminarTarea={eliminarTarea}
+                                                 / >
+                                    } 
+                                    
+                              })
                     :
                     <div className='lista-tareas__mensaje'>Agrega una tarea</div>
               }
